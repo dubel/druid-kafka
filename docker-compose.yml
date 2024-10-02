@@ -110,15 +110,14 @@ services:
     volumes:
       - ./storage:/opt/data
       - indexer_var:/opt/druid/var
-      - ./jvm.config:/tmp/conf/druid/cluster/misc/tail/jvm.config # Mount at the indexer-specific path
-      - ./jvm.config:/opt/druid/conf/druid/jvm.config
     depends_on:
       - zookeeper
       - postgres
       - coordinator
     ports:
       - "8090:8090" # Default port for indexer service
-    command: ["tail", "-f", "/dev/null"] # Prevent container from exiting
+    command:
+      - indexer
     env_file:
       - environment
 
