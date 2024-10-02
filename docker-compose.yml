@@ -23,7 +23,7 @@ services:
       - POSTGRES_DB=druid
 
   coordinator:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: coordinator
     volumes:
       - ./storage:/opt/data
@@ -39,7 +39,7 @@ services:
       - environment
 
   broker:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: broker
     volumes:
       - broker_var:/opt/druid/var
@@ -55,7 +55,7 @@ services:
       - environment
 
   historical:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: historical
     volumes:
       - ./storage:/opt/data
@@ -72,7 +72,7 @@ services:
       - environment
 
   middlemanager:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: middlemanager
     volumes:
       - ./storage:/opt/data
@@ -89,7 +89,7 @@ services:
       - environment
 
   router:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: router
     volumes:
       - router_var:/opt/druid/var
@@ -105,21 +105,20 @@ services:
       - environment
 
   indexer:
-    image: apache/druid:0.20.2
+    image: apache/druid:27.0.0
     container_name: indexer
     volumes:
       - ./storage:/opt/data
       - indexer_var:/opt/druid/var
-      - ${PWD}/jvm.config:/opt/druid/conf/druid/indexer/jvm.config # Mount at the indexer-specific path
-      - ${PWD}/jvm.config:/opt/druid/conf/druid/jvm.config
+      - ./jvm.config:/tmp/conf/druid/cluster/misc/tail/jvm.config # Mount at the indexer-specific path
+      - ./jvm.config:/opt/druid/conf/druid/jvm.config
     depends_on:
       - zookeeper
       - postgres
       - coordinator
     ports:
       - "8090:8090" # Default port for indexer service
-    command:
-      - indexer
+    command: ["tail", "-f", "/dev/null"] # Prevent container from exiting
     env_file:
       - environment
 
