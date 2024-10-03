@@ -21,7 +21,8 @@
     },
     "tuningConfig": {
       "type": "kafka",
-      "reportParseExceptions": false
+      "reportParseExceptions": false,
+      "workerCategory": "indexer"
     },
     "ioConfig": {
       "topic": "druidstream",
