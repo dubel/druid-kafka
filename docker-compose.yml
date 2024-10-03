@@ -110,6 +110,7 @@ services:
     volumes:
       - ./storage:/opt/data
       - indexer_var:/opt/druid/var
+      - ./config/indexer/runtime.properties:/opt/druid/conf/druid/cluster/runtime.properties # Mount runtime.properties
     depends_on:
       - zookeeper
       - postgres
