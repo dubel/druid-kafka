@@ -1,6 +1,7 @@
 {
   "type": "kafka",
-  "spec" : {
+  "taskType": "index",
+  "spec": {
     "dataSchema": {
       "dataSource": "data_from_kafka",
       "timestampSpec": {
@@ -8,12 +9,9 @@
         "format": "auto"
       },
       "dimensionsSpec": {
-        "dimensions": [
-          "name",
-          "city"
-        ]
+        "dimensions": ["name", "city"]
       },
-      "metricsSpec" : [],
+      "metricsSpec": [],
       "granularitySpec": {
         "type": "uniform",
         "segmentGranularity": "MINUTE",
