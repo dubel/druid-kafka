@@ -9,6 +9,3 @@
 
 - but choking with too much slots to be processed - will probably queue task on mm/
     - what happens when Indexer is overwhelmed
-
-
-- zapytac czy mozemy zaorac SBE i zrobic z tego dev deployment
