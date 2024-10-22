@@ -13,7 +13,14 @@ occupations=("Software Engineer" "Data Scientist" "Product Manager" "DevOps Engi
 marital_statuses=("Single" "Married")
 
 generate_random_time() {
-  echo $(date -u -d "$((RANDOM%30)) days ago $((RANDOM%24)):$(printf "%02d" $((RANDOM%60))):$(printf "%02d" $((RANDOM%60)))" +"%Y-%m-%dT%H:%M:%SZ")
+  # # Generate a random number of days and seconds
+  # random_days=$((RANDOM % 30))   # Random days between 0 and 29
+  # random_seconds=$((RANDOM % 86400)) # Random seconds in a day (0-86399)
+
+  # # Get the current date and subtract the random days and seconds
+  # random_date=$(date -u -j -v-"$random_days"d -v-"$random_seconds"s +"%Y-%m-%dT%H:%M:%SZ")
+  # echo "$random_date"
+  echo "2021-05-06T13:02:00.200Z"
 }
 
 echo "["
