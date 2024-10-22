@@ -1,0 +1,38 @@
+{
+  "type": "index",
+  "spec": {
+    "dataSchema": {
+      "dataSource": "external_json_source",
+      "timestampSpec": {
+        "column": "time",
+        "format": "iso"
+      },
+      "dimensionsSpec": {
+        "dimensions": ["name", "city"]
+      },
+      "metricsSpec": [],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "DAY",
+        "queryGranularity": "NONE",
+        "rollup": false
+      }
+    },
+    "ioConfig": {
+      "type": "index",
+      "inputSource": {
+        "type": "http",
+        "uris": [
+          "https://raw.githubusercontent.com/dubel/druid-kafka/main/kafka_input.json"
+        ]
+      },
+      "inputFormat": {
+        "type": "json"
+      }
+    },
+    "tuningConfig": {
+      "type": "index",
+      "maxRowsPerSegment": 500000
+    }
+  }
+}
