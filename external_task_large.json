@@ -8,7 +8,7 @@
         "format": "iso"
       },
       "dimensionsSpec": {
-        "dimensions": ["name", "city"]
+        "dimensions": ["name", "city", "age", "salary", "occupation"]
       },
       "metricsSpec": [],
       "granularitySpec": {
@@ -23,7 +23,7 @@
       "inputSource": {
         "type": "http",
         "uris": [
-          "https://github.com/dubel/druid-kafka/blob/main/randomizer/huge_task.json"
+          "https://raw.githubusercontent.com/dubel/druid-kafka/refs/heads/main/randomizer/huge_task.json"
         ]
       },
       "inputFormat": {
