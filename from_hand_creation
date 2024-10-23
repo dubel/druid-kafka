@@ -4,7 +4,7 @@ docker run -d --name aod_indexer \
   -e "druid_host=aod-indexer" \
   -e "druid_indexer_ports=8091" \
   -e "druid.worker.enabled=true" \
-  -e "druid.extensions.loadList=[\"druid-kafka-indexing-service\"]" \
+  -e 'druid.extensions.loadList=["druid-kafka-indexing-service","druid-histogram","druid-datasketches","postgresql-metadata-storage"]' \
   -e "druid.indexer.runner.type=local" \
   -e "druid.worker.capacity=5" \
   -e "druid.zk.service.host=zookeeper:2181" \
