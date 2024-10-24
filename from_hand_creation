@@ -16,6 +16,52 @@ docker run -d --name aod_indexer \
   -e "druid.indexer.logs.local.baseDir=/var/log/druid/tasks" \
   -e "druid.indexer.runner.type=local" \
   -e "druid.worker.category=indexer" \
-  apache/druid:27.0.0
+  apache/druid:27.0.0 \
+  /bin/bash -c 'mkdir -p /tmp/conf/druid/cluster/misc/sh && echo "-Xmx1g" > /tmp/conf/druid/cluster/misc/sh/jvm.config && bin/run-druid indexer'
 
   "druid-histogram", "druid-datasketches", "postgresql-metadata-storage"]
+
+
+docker run -d --name aod_indexer \
+  --network aod_druid \
+  -p 8091:8091 \
+  -e "druid_host=aod-indexer" \
+  -e "druid_indexer_ports=8091" \
+  -e "druid.worker.enabled=true" \
+  -e 'druid.extensions.loadList=["druid-kafka-indexing-service","druid-histogram","druid-datasketches","postgresql-metadata-storage"]' \
+  -e "druid.indexer.runner.type=local" \
+  -e "druid.worker.capacity=5" \
+  -e "druid.zk.service.host=zookeeper:2181" \
+  -e "druid.metadata.storage.type=postgresql" \
+  -e "druid.metadata.storage.connector.connectURI=jdbc:postgresql://postgres/postgres" \
+  -e "druid.metadata.storage.connector.user=postgres" \
+  -e "druid.metadata.storage.connector.password=TCrGaanoC2s7gT" \
+  -e "druid.indexer.logs.type=local" \
+  -e "druid.indexer.logs.local.baseDir=/var/log/druid/tasks" \
+  -e "druid.indexer.runner.type=local" \
+  -e "druid.worker.category=indexer" \
+  aod_indexer_with_config \
+  bin/run-druid indexer
+
+
+docker run -d --name aod_indexer \
+  --network aod_druid \
+  -p 8091:8091 \
+  -v /tmp/mdubel/runtime.properties:/opt/druid/conf/druid/cluster/runtime.properties \
+  -e "druid_host=aod-indexer" \
+  -e "druid_indexer_ports=8091" \
+  -e "druid.worker.enabled=true" \
+  -e 'druid.extensions.loadList=["druid-kafka-indexing-service","druid-histogram","druid-datasketches","postgresql-metadata-storage"]' \
+  -e "druid.indexer.runner.type=local" \
+  -e "druid.worker.capacity=5" \
+  -e "druid.zk.service.host=zookeeper:2181" \
+  -e "druid.metadata.storage.type=postgresql" \
+  -e "druid.metadata.storage.connector.connectURI=jdbc:postgresql://postgres/postgres" \
+  -e "druid.metadata.storage.connector.user=postgres" \
+  -e "druid.metadata.storage.connector.password=TCrGaanoC2s7gT" \
+  -e "druid.indexer.logs.type=local" \
+  -e "druid.indexer.logs.local.baseDir=/var/log/druid/tasks" \
+  -e "druid.indexer.runner.type=local" \
+  -e "druid.worker.category=indexer" \
+  apache/druid:27.0.0 \
+  indexer
